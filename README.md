@@ -15,6 +15,16 @@ Estudar problemas de logística é crucial para otimizar o fluxo de bens e servi
 A logística desempenha um papel fundamental na competitividade das empresas, influenciando diretamente a satisfação do cliente e a sustentabilidade
 ambiental. Ao compreender os desafios logísticos, é possível desenvolver soluções inovadoras que impulsionam o crescimento econômico e promovem um futuro mais eficiente e responsável.
 
+### Estrutura do Código
+
+```bash
++ etapa_1/
+├── grafo.py
+├── visualizacao_de_dados.ipynb
+├── selected_instances/
+└── README.md
+```
+
 #### Exercícios:
 
 ##### Etapa 1:
