@@ -9,25 +9,29 @@
             Thiago Lima Pereira - 202310057
             Gustavo de Jesus Teodoro - 202311146
 
-*  Introdução
+### Introdução
 
 Estudar problemas de logística é crucial para otimizar o fluxo de bens e serviços, resultando em maior eficiência e redução de custos para empresas e consumidores. A análise detalhada de processos logísticos permite identificar gargalos, melhorar o planejamento de rotas, gerenciar estoques de forma mais eficaz e implementar tecnologias que aprimoram a tomada de decisões.
 A logística desempenha um papel fundamental na competitividade das empresas, influenciando diretamente a satisfação do cliente e a sustentabilidade
 ambiental. Ao compreender os desafios logísticos, é possível desenvolver soluções inovadoras que impulsionam o crescimento econômico e promovem um futuro mais eficiente e responsável.
 
-### Estrutura do Código
+### Estrutura do Projeto
 
 ```bash
 + etapa_1/
 ├── grafo.py
 ├── visualizacao_de_dados.ipynb
 ├── selected_instances/
-└── README.md
+├── README.md
+
++ etapa_2/
+├── etapa2.py
+├── G14/ ← pasta onde as soluções são armazenadas automaticamente
 ```
 
-#### Exercícios:
+---
 
-##### Etapa 1:
+## Etapa 1
 
 A primeira etapa solicitava que realizassemos a criação de uma estrutura de dados para receber grafos. Para testes, utilizamos arquivos da pasta `selected_instances`, mais especificamente os arquivos nomeados como `BHW*.bat`.
 Sendo assim, realizamos a leitura dos dados juntamente com um ETL, utilizando python para que seja necessário somente modificar o nome do arquivo que descreve o grafo para que ele seja inserido na estrutura de dados e realize as devidas operações.
@@ -167,3 +171,79 @@ Esse cálculo é importante para encontrar o menor dos caminhos mínimos.
 
     return diametro
 ```
+
+---
+
+## Etapa 2: Construção de Solução Inicial
+
+Nesta segunda etapa, foi implementado um algoritmo **construtivo** para gerar uma solução inicial viável ao problema do CARP (Capacitated Arc Routing Problem). O objetivo foi gerar rotas que:
+
+- Não ultrapassem a **capacidade dos veículos**;
+- Atendam **cada serviço exatamente uma vez**;
+- Evitem **duplicidade no cálculo de custo ou demanda**, mesmo que um arco ou vértice seja visitado mais de uma vez.
+
+### Funcionamento do Código
+
+A execução começa pela função `ler_pasta(...)`, que percorre automaticamente os arquivos da pasta `etapa_1/selected_instances/`. Para cada arquivo:
+
+1. É feita a **leitura do grafo** com `ler_arquivo(...)`;
+2. O **clock** é iniciado (`clock_inicio`) com `pegar_tempo_clock()` para medir o tempo de execução;
+3. O algoritmo construtivo `construir_rotas_carp(grafo)` é chamado;
+4. O clock é finalizado (`clock_fim`) e o tempo é armazenado;
+5. A função `imprimir_saida_em_pasta(...)` salva o arquivo de saída no formato padronizado na pasta `etapa_2/G14/`.
+
+---
+
+### Estratégia do Algoritmo Construtivo
+
+A solução é construída gradualmente da seguinte forma:
+
+- Inicia-se no **depósito** com capacidade máxima.
+- Iterativamente, seleciona-se o **elemento mais próximo** (vértice, aresta ou arco ainda requerido) que caiba na capacidade restante.
+- O caminho é calculado com **Floyd-Warshall** (algoritmo desenvolvido na etapa 1) e adicionado à rota.
+- A demanda do serviço é descontada da capacidade.
+- Após atender a demanda máxima possível, o veículo retorna ao depósito e uma nova rota se inicia.
+
+Este processo garante que:
+
+- Cada serviço é contado **uma única vez**;
+- As restrições de **capacidade** são respeitadas;
+- O caminho entre pontos é sempre o **mais curto** disponível.
+
+---
+
+### Geração de Saída
+
+A saída para cada instância é salva no formato:
+
+```
+sol-NOMEINSTANCIA.dat
+```
+
+Com o conteúdo no seguinte padrão:
+
+```
+<custo_total_da_solucao>
+<total_de_rotas>
+<total_de_clocks_para_a_execucao_do_algoritmo_referencia>
+<otal_de_clocks_para_encontrar_a_solucao_referencia>
+<linha_descrevendo_cada_rota>
+```
+
+Cada linha de rota segue o formato exigido pela especificação do problema, incluindo todos os serviços realizados na ordem correta e suas respectivas identificações.
+
+---
+
+### Execução
+
+Para rodar o projeto da Etapa 2, basta executar o script `etapa2.py`:
+
+```bash
+python etapa2.py
+```
+
+O script irá automaticamente:
+
+- Ler todas as instâncias da pasta `etapa_1/selected_instances/`;
+- Processá-las com o algoritmo construtivo;
+- Salvar as soluções na pasta `etapa_2/G14/`.
