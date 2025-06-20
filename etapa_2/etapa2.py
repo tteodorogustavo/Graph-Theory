@@ -311,7 +311,7 @@ def imprimir_saida_formatada(grafo, rotas, clocks_execucao_ref, clocks_solucao_r
                         servicos_visitados.add(vert_req_dict[v])
                         break
 
-        linha = f"0 1 {i+1} {demanda_rota} {custo_rota} {total_visitas} "
+        linha = f" 0 1 {i+1} {demanda_rota} {custo_rota}  {total_visitas} "
         linha += "(D 0,1,1) "
         for j in range(len(rota)-1):
             u = rota[j]
@@ -336,6 +336,7 @@ def imprimir_saida_formatada(grafo, rotas, clocks_execucao_ref, clocks_solucao_r
             if v in vert_req_dict:
                 id_serv = vert_req_dict[v]
                 linha += f"(S {id_serv},{v},{v}) "
+        linha += "(D 0,1,1) "
         linhas_rotas.append(linha.strip())
 
     with open(f"sol-{grafo.nome}.dat", "w") as f:
