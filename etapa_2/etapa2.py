@@ -337,7 +337,7 @@ def imprimir_saida_formatada(grafo, rotas, clocks_execucao_ref, clocks_solucao_r
                 id_serv = vert_req_dict[v]
                 linha += f"(S {id_serv},{v},{v}) "
         linha += "(D 0,1,1) "
-        linhas_rotas.append(linha.strip())
+        linhas_rotas.append(linha)
 
     with open(f"sol-{grafo.nome}.dat", "w") as f:
         f.write(f"{custo_total_solucao}\n")
