@@ -377,6 +377,6 @@ def imprimir_saida_em_pasta(grafo, rotas, clocks_execucao_ref, clocks_solucao_re
     os.chdir(cwd)
 
 if __name__ == "__main__":
-    ler_pasta("../etapa_1/selected_instances/")
+    ler_pasta("./MCGRP/")
     print("Execução concluída.")
     print("Arquivos de saída gerados na pasta ./etapa_2/G14/")
