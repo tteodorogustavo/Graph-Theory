@@ -247,3 +247,72 @@ O script irá automaticamente:
 - Ler todas as instâncias da pasta `etapa_1/selected_instances/`;
 - Processá-las com o algoritmo construtivo;
 - Salvar as soluções na pasta `etapa_2/G14/`.
+
+---
+
+## Etapa 3: Métodos de Melhoria e Modularização
+
+Nesta etapa, o foco foi aprimorar a solução inicial gerada na Etapa 2 através da implementação de um método de melhoria e, crucialmente, a modularização do código para uma melhor organização e manutenção do projeto.
+
+### Modularização do Código
+
+Para atender ao feedback de modularização e melhorar a estrutura do projeto, o código foi dividido em módulos com responsabilidades bem definidas. A estrutura de diretórios da `etapa_3` agora se apresenta da seguinte forma:
+
+```bash
++ etapa_3/
+├── codigo-fonte/
+│   ├── construcao_rotas.py
+│   ├── data_structure.py
+│   ├── floyd_warshall.py
+│   ├── inputs.py
+│   ├── main.py
+│   ├── optimization.py
+│   └── outputs.py
+├── G14/ <- pasta onde as soluções são armazenadas automaticamente
+├── MCGRP/ <- pasta com todas as soluções a serem executadas
+├── G14.zip
+└── README.md
+```
+
+Cada arquivo dentro de `codigo-fonte/` tem um propósito específico:
+
+*   `construcao_rotas.py`: Contém a lógica para a construção das rotas iniciais (algoritmo construtivo).
+*   `data_structure.py`: Define a estrutura de dados do grafo que será processada pelos demais algoritmos.
+*   `floyd_warshall.py`: Implementa o algoritmo de Floyd-Warshall para cálculo de caminhos mais curtos.
+*   `inputs.py`: Responsável pela leitura e parsing dos arquivos de entrada (`.dat`).
+*   `main.py`: O arquivo principal que orquestra a execução, chamando as funções dos outros módulos.
+*   `optimization.py`: Contém os algoritmos de otimização, como o 2-opt.
+*   `outputs.py`: Lida com a formatação e gravação dos arquivos de saída.
+
+Esta abordagem visa tornar o código mais limpo, coeso e fácil de entender, facilitando futuras modificações e extensões.
+
+### Algoritmo 2-opt
+
+Para aprimorar as rotas geradas pelo algoritmo construtivo, foi implementado o algoritmo de otimização **2-opt**. Este é um dos métodos de busca local comumente utilizado para resolver o Problema do Caixeiro Viajante (TSP) e problemas de roteamento de veículos, como o CARP, que encontramos na literatura e resolvemos implementar.
+
+#### Como funciona o 2-opt:
+
+O algoritmo 2-opt opera iterativamente em uma rota existente, buscando melhorias. Ele funciona da seguinte maneira:
+
+1.  **Seleção de Segmentos:** Escolhe dois segmentos não adjacentes da rota.
+2.  **Inversão:** Inverte a ordem dos nós em um dos segmentos selecionados.
+3.  **Avaliação:** Calcula o custo da nova rota resultante.
+4.  **Troca:** Se a nova rota tiver um custo total menor que a rota original e ainda respeitar as restrições de capacidade e demanda, a troca é aceita e a nova rota se torna a rota atual.
+5.  **Iteração:** O processo se repete até que nenhuma melhoria significativa possa ser encontrada, ou seja, até que nenhuma troca de 2-opt resulte em uma rota de menor custo.
+
+No contexto deste trabalho, a implementação do 2-opt foi adaptada para garantir que as restrições do CARP (capacidade do veículo e atendimento único de serviços) sejam mantidas durante as operações de troca.
+
+### Execução da Etapa 3
+
+Para executar a solução da Etapa 3, você deve rodar o arquivo `main.py` localizado dentro da pasta `codigo-fonte/`:
+
+```bash
+python etapa_3/codigo-fonte/main.py
+```
+
+Este script irá:
+
+- Ler as instâncias de teste.
+- Gerar uma solução inicial usando o algoritmo construtivo.
+- Aplicar o algoritmo 2-opt para otimizar as rotas.
+- Salvar os resultados otimizados na pasta `etapa_3/G14/` no formato `sol-NOMEINSTANCIA.dat`.
